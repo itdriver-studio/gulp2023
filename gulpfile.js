@@ -16,4 +16,3 @@ function styles() {
 }
 
 exports.styles = styles;
-exports.styles = styles;
