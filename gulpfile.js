@@ -7,6 +7,7 @@ const {
 const scss = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
+const browserSync = require('').create;
 
 function styles() {
     return src('app/scss/style.scss')
@@ -15,6 +16,7 @@ function styles() {
             outputStyle: 'compressed'
         })) // call scss const + compression
         .pipe(dest('app/css'))
+        .pipe(browserSync.stream())
 }
 
 function scripts() {
@@ -22,11 +24,21 @@ function scripts() {
         .pipe(concat('main.min.js'))
         .pipe(uglify())
         .pipe(dest('app/js'))
+        .pipe(browserSync.stream())
 }
 
 function watching() {
     watch(['app/scss/style.scss'], styles) //chsnce in brakets - starts after comma 
     watch(['app/js/main.js'], scripts)
+    watch(['app/*.html']).on('change', browserSync.reload)
+}
+
+function browsersync() {
+    browserSync.init({
+        server: {
+            baseDir: "app/"
+        }
+    })
 }
 
 
@@ -34,3 +46,4 @@ function watching() {
 exports.styles = styles; //.gulp command = function
 exports.scripts = scripts;
 exports.watching = watching;
+exports.browsersync = browsersync;
