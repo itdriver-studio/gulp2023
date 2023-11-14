@@ -1,13 +1,14 @@
 const {
     src,
     dest,
-    watch
+    watch,
+    parallel
 } = require('gulp');
 
 const scss = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
-const browserSync = require('').create;
+const browserSync = require('browser-sync').create();
 
 function styles() {
     return src('app/scss/style.scss')
@@ -38,7 +39,7 @@ function browsersync() {
         server: {
             baseDir: "app/"
         }
-    })
+    });
 }
 
 
@@ -47,3 +48,5 @@ exports.styles = styles; //.gulp command = function
 exports.scripts = scripts;
 exports.watching = watching;
 exports.browsersync = browsersync;
+
+exports.default = parallel(styles, scripts, browsersync, watching);
