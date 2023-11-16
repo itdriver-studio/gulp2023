@@ -12,7 +12,10 @@ const browserSync = require('browser-sync').create();
 const autoprefixer = require('gulp-autoprefixer');
 
 function styles() {
-    return src('app/scss/style.scss')
+    return src([
+        'node_modules/swiper/swiper-bundle.js',
+        'app/scss/style.scss'
+    ])
         .pipe(autoprefixer({
             overrideBrowserslist: ['last 10 version']
         }))
