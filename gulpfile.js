@@ -9,9 +9,13 @@ const scss = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 const browserSync = require('browser-sync').create();
+const autoprefixer = require('gulp-autoprefixer');
 
 function styles() {
     return src('app/scss/style.scss')
+        .pipe(autoprefixer({
+            overrideBrowserslist: ['last 10 version']
+        }))
         .pipe(concat('style.min.css'))
         .pipe(scss({
             outputStyle: 'compressed'
